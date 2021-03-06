@@ -1,0 +1,9 @@
+/home/cyb3rc001/Projects/Ferrum/libdiscord/CMakeFiles/edit_cache.dir
+/home/cyb3rc001/Projects/Ferrum/libdiscord/CMakeFiles/tests-json.dir
+/home/cyb3rc001/Projects/Ferrum/libdiscord/CMakeFiles/example-bot-hash.dir
+/home/cyb3rc001/Projects/Ferrum/libdiscord/CMakeFiles/example-simplepost.dir
+/home/cyb3rc001/Projects/Ferrum/libdiscord/CMakeFiles/example-bot-counter.dir
+/home/cyb3rc001/Projects/Ferrum/libdiscord/CMakeFiles/example-bot-ping.dir
+/home/cyb3rc001/Projects/Ferrum/libdiscord/CMakeFiles/example-bot-ayylmao.dir
+/home/cyb3rc001/Projects/Ferrum/libdiscord/CMakeFiles/rebuild_cache.dir
+/home/cyb3rc001/Projects/Ferrum/libdiscord/CMakeFiles/discord.dir
