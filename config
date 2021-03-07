@@ -1,4 +1,4 @@
-token=NzY5MjY4MDA0NjE3MzIyNTM5.X5MiqA.X4JaL7u-OqdZkORE_vqohWePV6M
+token=NzY5MjY4MDA0NjE3MzIyNTM5.X5MiqA.z-erRXT5XNODc80DBK984cyT34g
 main_channel=758054227259031565
-chatter_interval_min=30000
-chatter_interval_max=60000
+chatter_interval_min=180000
+chatter_interval_max=300000

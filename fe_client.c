@@ -35,6 +35,6 @@ int fe_cb_general(struct ld_context* context, enum ld_callback_reason reason, vo
 int fe_cb_msg_create(struct ld_context* context, struct ld_json_message* msg)
 {
 	if(msg->id != context->current_user->id){
-		fe_chatter_tick(&chatterinfo, context);
+		fe_chatter_tick(&chatterinfo, context, msg->channel_id);
 	}
 }

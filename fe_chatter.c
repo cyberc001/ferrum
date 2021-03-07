@@ -30,12 +30,17 @@ int fe_chatter_init(struct fe_chatter_info* info)
 		}
 		info->phrases = tmp;
 		info->phrases[info->phrases_sz-1] = strdup(phr);
+
+		free(phr);
+		phr = NULL;
+		phr_sz = 0;
 	}
 
 	fclose(phrasefd);
 }
 
-void fe_chatter_tick(struct fe_chatter_info* info, struct ld_context* context)
+void fe_chatter_tick(struct fe_chatter_info* info, struct ld_context* context,
+			uint64_t channel_id)
 {
 	struct timespec spec;
 	clock_gettime(CLOCK_REALTIME, &spec);
@@ -43,7 +48,7 @@ void fe_chatter_tick(struct fe_chatter_info* info, struct ld_context* context)
 	if(spec.tv_sec * 1000 + spec.tv_nsec / 1000000
 		>= info->tick.tv_sec * 1000 + info->tick.tv_nsec / 1000000 + info->itvl)
 	{ // interval is passed, time to drop a phrase
-		ld_send_basic_message(context, fe_config.main_channel,
+		ld_send_basic_message(context, channel_id,
 					info->phrases[rand() % info->phrases_sz]);
 
 

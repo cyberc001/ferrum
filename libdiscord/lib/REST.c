@@ -39,7 +39,7 @@ int ld_headers_put(struct ld_headers *headers, char *key, char *value) {
     void *ret1, *ret2;
 
     ret1 = realloc(headers->key, sizeof(char *) * (headers->length + 1));
-    ret2 = realloc(headers->value, sizeof(char *) * headers->length + 1);
+    ret2 = realloc(headers->value, sizeof(char *) * (headers->length + 1));
 
     if(ret1 == NULL) {
         ld_warning("ld_headers_put: couldn't realloc keys");

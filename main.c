@@ -24,6 +24,7 @@ int main()
 
 	// Creaing context and connecting
 	struct ld_context context;
+	memset(&context, 0, sizeof(context));
 	struct ld_context_info *info = malloc(sizeof(struct ld_context_info));
 	ld_init_context_info(info);
 		info->bot_token = fe_config.token;
@@ -35,6 +36,7 @@ int main()
 		fprintf(stderr, "Unable to create context, exiting.\n");
 		return 2;
 	}
+
 	hndl = curl_easy_init();
 
 	// Main loop

@@ -35,6 +35,8 @@ int fe_chatter_init(struct fe_chatter_info* info);
 // Arguments:
 //	info - pointer to info structure.
 //	context - pointer to discord context structure.
-void fe_chatter_tick(struct fe_chatter_info* info, struct ld_context* context);
+//	channel_id - id of channel last message was sent in.
+void fe_chatter_tick(struct fe_chatter_info* info, struct ld_context* context,
+			uint64_t channel_id);
 
 #endif
