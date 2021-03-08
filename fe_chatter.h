@@ -29,8 +29,18 @@ extern const char phrase_fpath[];
 //	2 - not enough memory to store all the phrases.
 int fe_chatter_init(struct fe_chatter_info* info);
 
+
 // Description:
-// Called within main loop (in main.c) to roll a random phrase to be written in chat.
+// Sends a random phrase to specified channel.
+// Arguments:
+//	info - pointer to info structure.
+//	context - pointer to discord context structure.
+//	channel_id - id of channel to send message in.
+void fe_chatter_chatrandom(struct fe_chatter_info* info, struct ld_context* context,
+				uint64_t channel_id);
+
+// Description:
+// Called within main callback (in fe_client.c) to roll a random phrase to be written in chat.
 // Uses clock_t info and pseudo-RNG to determine intervals.
 // Arguments:
 //	info - pointer to info structure.

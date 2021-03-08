@@ -1,12 +1,14 @@
 #include "fe_client.h"
+
 #include "fe_config.h"
 #include "fe_chatter.h"
+#include "fe_command.h"
 
-struct fe_chatter_info chatterinfo;
+struct fe_chatter_info fe_client_chatterinfo;
 
 int fe_cb_init()
 {
-        int err = fe_chatter_init(&chatterinfo);
+        int err = fe_chatter_init(&fe_client_chatterinfo);
         if(err == 1)      return 1;
         else if(err == 2) return 2;
 
@@ -35,6 +37,7 @@ int fe_cb_general(struct ld_context* context, enum ld_callback_reason reason, vo
 int fe_cb_msg_create(struct ld_context* context, struct ld_json_message* msg)
 {
 	if(msg->id != context->current_user->id){
-		fe_chatter_tick(&chatterinfo, context, msg->channel_id);
+		fe_chatter_tick(&fe_client_chatterinfo, context, msg->channel_id);
 	}
+	fe_command_preprocess(context, msg);
 }

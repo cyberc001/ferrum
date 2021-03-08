@@ -6,6 +6,7 @@
 
 #include "libdiscord.h"
 
+extern struct fe_chatter_info fe_client_chatterinfo;
 
 // Description: does some initialization for certain callback functions.
 // Return values:

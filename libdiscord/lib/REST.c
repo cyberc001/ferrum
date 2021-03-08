@@ -175,7 +175,7 @@ size_t ld_rest_writefunction(void *ptr, size_t size, size_t nmemb, struct ld_res
     size_t new_len = response->body_length + size * nmemb;
 
     if(response->body == NULL) {
-        tmp = malloc(sizeof(char) * (new_len));
+        tmp = malloc(sizeof(char) * (new_len+1));
     } else {
         tmp = realloc(response->body, new_len+1);
     }

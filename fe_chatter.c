@@ -39,6 +39,14 @@ int fe_chatter_init(struct fe_chatter_info* info)
 	fclose(phrasefd);
 }
 
+
+void fe_chatter_chatrandom(struct fe_chatter_info* info, struct ld_context* context,
+			uint64_t channel_id)
+{
+	ld_send_basic_message(context, channel_id,
+				info->phrases[rand() % info->phrases_sz]);
+}
+
 void fe_chatter_tick(struct fe_chatter_info* info, struct ld_context* context,
 			uint64_t channel_id)
 {
@@ -47,10 +55,8 @@ void fe_chatter_tick(struct fe_chatter_info* info, struct ld_context* context,
 
 	if(spec.tv_sec * 1000 + spec.tv_nsec / 1000000
 		>= info->tick.tv_sec * 1000 + info->tick.tv_nsec / 1000000 + info->itvl)
-	{ // interval is passed, time to drop a phrase
-		ld_send_basic_message(context, channel_id,
-					info->phrases[rand() % info->phrases_sz]);
-
+	{ // interval has passed, time to drop a phrase
+		fe_chatter_chatrandom(info, context, channel_id);
 
 		clock_gettime(CLOCK_REALTIME, &info->tick);
 		info->itvl = rand() % (fe_config.chatter_itvl_max - fe_config.chatter_itvl_min + 1)
@@ -60,3 +66,4 @@ void fe_chatter_tick(struct fe_chatter_info* info, struct ld_context* context,
 		printf("Chatter cooldown: %lu\n",
 			info->tick.tv_sec * 1000 + info->tick.tv_nsec / 1000000 + info->itvl - spec.tv_sec * 1000 + spec.tv_nsec / 1000000);
 }
+
