@@ -4,10 +4,11 @@
 #include "fe_client.h"
 #include "fe_chatter.h"
 
-struct fe_command fe_command_defs[3] = {
+struct fe_command fe_command_defs[4] = {
 					{"$help", "- отобразить список команд", &fe_command_help},
 					{"$ping", "- случайная фраза от Великого и Ужасного", &fe_command_ping},
-					{"$man", "<страница> <название> - справка по функции\\команде (утилита man)", &fe_command_man}
+					{"$man", "<страница> <название> - справка по функции\\команде (утилита man)", &fe_command_man},
+					{"$decide", "[варианты ответа] - доверить свою судьбу Железняку и выбрать между несколькими вариантами ответа. Если не указывать варианты ответа, то будут выбор между \"да\" и \"нет\".", &fe_command_decide}
 				       };
 
 void fe_command_preprocess(struct ld_context* context, struct ld_json_message* msg)
@@ -43,9 +44,9 @@ void fe_command_preprocess(struct ld_context* context, struct ld_json_message* m
 			case 1: // reading an argument
 			{
 				while(isspace(*c) && *c) ++c;
-				while( (!isquotes && !isspace(*c)) && *c){
+				while( (isquotes || !isspace(*c)) && *c){
 					if(*c == '\"')
-						{isquotes = !isquotes; continue;}
+						{isquotes = !isquotes; ++c; continue;}
 
 					arg_buf[arg_buf_ind++] = *c;
 					if(arg_buf_ind >= sizeof(arg_buf)/sizeof(arg_buf[0]) - 1)
@@ -81,6 +82,7 @@ void fe_command_preprocess(struct ld_context* context, struct ld_json_message* m
 	|| pflag == -4) // cannot allocate dynamic memory for an argument string
 		goto return_cleanup;
 
+	printf("%lu\n", args_sz);
 	// NULL-terminating args array for easier usage with exec function family
 	if(args)
 	{
@@ -133,7 +135,7 @@ void fe_command_ping(char** args, size_t args_sz, struct ld_context* context, st
 	fe_chatter_chatrandom(&fe_client_chatterinfo, context, msg->channel_id);
 }
 
-// $man <man utility arguments>
+// $man
 void fe_command_man(char** args, size_t args_sz, struct ld_context* context, struct ld_json_message* msg)
 {
 	// Forming command string for shell
@@ -177,4 +179,19 @@ void fe_command_man(char** args, size_t args_sz, struct ld_context* context, str
 	}
 
 	pclose(manpipe);
+}
+
+void fe_command_decide(char** args, size_t args_sz, struct ld_context* context, struct ld_json_message* msg)
+{
+	printf("%lu\n", args_sz);
+	const char* result;
+	if(args_sz == 0){
+		result = rand() % 2 == 0 ? "Таки-да." : "Таки-нет.";
+	}
+	else{
+		int r = rand() % args_sz;
+		result = args[r];
+	}
+
+	ld_send_basic_message(context, msg->channel_id, result);
 }
