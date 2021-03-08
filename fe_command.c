@@ -82,7 +82,6 @@ void fe_command_preprocess(struct ld_context* context, struct ld_json_message* m
 	|| pflag == -4) // cannot allocate dynamic memory for an argument string
 		goto return_cleanup;
 
-	printf("%lu\n", args_sz);
 	// NULL-terminating args array for easier usage with exec function family
 	if(args)
 	{
@@ -183,7 +182,6 @@ void fe_command_man(char** args, size_t args_sz, struct ld_context* context, str
 
 void fe_command_decide(char** args, size_t args_sz, struct ld_context* context, struct ld_json_message* msg)
 {
-	printf("%lu\n", args_sz);
 	const char* result;
 	if(args_sz == 0){
 		result = rand() % 2 == 0 ? "Таки-да." : "Таки-нет.";
